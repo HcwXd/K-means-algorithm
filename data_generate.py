@@ -3,15 +3,6 @@ import random
 import csv
 
 
-"""
-Step0. Read data(X1, X2, X3, Xi)
-Step1. Randomly pick K random points as cluster centers called centroids.
-Step3. Assign each data to the clusters by its distance
-Step4. Pick new centroids by the clusters
-Step5. Repeat Step3 and Step4 til the world end
-"""
-
-
 def data_generation():
     number_of_data = 1000
     number_of_ans = 3
@@ -74,7 +65,7 @@ def data_generation():
 
 data_x, data_y = data_generation()
 
-with open('output.csv', 'w', newline='') as csvfile:
+with open('data.csv', 'w', newline='') as csvfile:
 
     writer = csv.writer(csvfile)
     writer.writerow(s for s in data_x)
