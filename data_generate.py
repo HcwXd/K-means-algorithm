@@ -1,5 +1,7 @@
 from matplotlib import pyplot as plt
 import random
+import csv
+
 
 """
 Step0. Read data(X1, X2, X3, Xi)
@@ -71,3 +73,9 @@ def data_generation():
 
 
 data_x, data_y = data_generation()
+
+with open('output.csv', 'w', newline='') as csvfile:
+
+    writer = csv.writer(csvfile)
+    writer.writerow(s for s in data_x)
+    writer.writerow(s for s in data_y)
