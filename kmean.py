@@ -47,46 +47,62 @@ for i in range(number_of_ans):
     centeroid_x.append(random.randint(min(data_x), max(data_x)))
     centeroid_y.append(random.randint(min(data_y), max(data_y)))
 
-""" Display
+# """ Display
 plt.scatter(data_x, data_y, color="blue", s=3)
 plt.scatter(centeroid_x, centeroid_y, color="red")
-"""
+# """
 
-# Step2. Assign each data to the clusters by its distance
-for i in range(number_of_ans):
-    cluster_group_x.append([])
-    cluster_group_y.append([])
+round_counter = 0
+while(round_counter < 1000):
+    round_counter += 1
+    # Step2. Assign each data to the clusters by its distance
+    cluster_group_x = []
+    cluster_group_y = []
+    for i in range(number_of_ans):
+        cluster_group_x.append([])
+        cluster_group_y.append([])
 
-for index in range(len(data_x)):
-    x = data_x[index]
-    y = data_y[index]
-    distance = []
-    for s in range(number_of_ans):
-        distance.append(geo_distance(
-            x, y, centeroid_x[s], centeroid_y[s]))
-    min_distance = min(distance)
-    min_index = distance.index(min_distance)
-    cluster_group_x[min_index].append(x)
-    cluster_group_y[min_index].append(y)
+    for index in range(len(data_x)):
+        x = data_x[index]
+        y = data_y[index]
+        distance = []
+        for s in range(number_of_ans):
+            distance.append(geo_distance(
+                x, y, centeroid_x[s], centeroid_y[s]))
+        min_distance = min(distance)
+        min_index = distance.index(min_distance)
+        cluster_group_x[min_index].append(x)
+        cluster_group_y[min_index].append(y)
 
-""" Display
+    """ Display
+    plt.scatter(cluster_group_x[0], cluster_group_y[0], color="blue", s=3)
+    plt.scatter(cluster_group_x[1], cluster_group_y[1], color="yellow", s=3)
+    plt.scatter(cluster_group_x[2], cluster_group_y[2], color="green", s=3)
+    plt.scatter(centeroid_x, centeroid_y, color="black")
+    """
+
+    # Step3. Pick new centroids by the clusters
+
+    for index in range(number_of_ans):
+        new_x = sum(cluster_group_x[index]) / len(cluster_group_x[index])
+        new_y = sum(cluster_group_y[index]) / len(cluster_group_y[index])
+        if(new_x == centeroid_x[index] and new_y == centeroid_y[index]):
+            break
+        else:
+            centeroid_x[index] = new_x
+            centeroid_y[index] = new_y
+            plt.scatter(centeroid_x, centeroid_y, color="black")
+
+    """ Display
+    plt.scatter(cluster_group_x[0], cluster_group_y[0], color="blue", s=3)
+    plt.scatter(cluster_group_x[1], cluster_group_y[1], color="yellow", s=3)
+    plt.scatter(cluster_group_x[2], cluster_group_y[2], color="green", s=3)
+    plt.scatter(centeroid_x, centeroid_y, color="black")
+    """
+
+
 plt.scatter(cluster_group_x[0], cluster_group_y[0], color="blue", s=3)
 plt.scatter(cluster_group_x[1], cluster_group_y[1], color="yellow", s=3)
 plt.scatter(cluster_group_x[2], cluster_group_y[2], color="green", s=3)
-plt.scatter(centeroid_x, centeroid_y, color="black")
-"""
-
-# Step3. Pick new centroids by the clusters
-
-for index in range(number_of_ans):
-    centeroid_x[index] = sum(cluster_group_x[index]) / \
-        len(cluster_group_x[index])
-    centeroid_y[index] = sum(cluster_group_y[index]) / \
-        len(cluster_group_y[index])
-
-""" Display
-plt.scatter(cluster_group_x[0], cluster_group_y[0], color="blue", s=3)
-plt.scatter(cluster_group_x[1], cluster_group_y[1], color="yellow", s=3)
-plt.scatter(cluster_group_x[2], cluster_group_y[2], color="green", s=3)
-plt.scatter(centeroid_x, centeroid_y, color="black")
-"""
+plt.scatter(centeroid_x, centeroid_y, marker="*", color="black", s=10)
+print(round_counter)
