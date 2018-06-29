@@ -75,3 +75,18 @@ plt.scatter(cluster_group_x[1], cluster_group_y[1], color="yellow", s=3)
 plt.scatter(cluster_group_x[2], cluster_group_y[2], color="green", s=3)
 plt.scatter(centeroid_x, centeroid_y, color="black")
 """
+
+# Step3. Pick new centroids by the clusters
+
+for index in range(number_of_ans):
+    centeroid_x[index] = sum(cluster_group_x[index]) / \
+        len(cluster_group_x[index])
+    centeroid_y[index] = sum(cluster_group_y[index]) / \
+        len(cluster_group_y[index])
+
+""" Display
+plt.scatter(cluster_group_x[0], cluster_group_y[0], color="blue", s=3)
+plt.scatter(cluster_group_x[1], cluster_group_y[1], color="yellow", s=3)
+plt.scatter(cluster_group_x[2], cluster_group_y[2], color="green", s=3)
+plt.scatter(centeroid_x, centeroid_y, color="black")
+"""
